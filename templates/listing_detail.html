@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<style>
+    .styled-div {
+      background-color: #f0f0f0;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px auto; /* Updated */
+      color: #333;
+      font-size: 18px;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      width: 60%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .styled-div:hover {
+      background-color: #e0e0e0;
+      transform: scale(1.05);
+    }
+
+    /* Flexbox Example */
+    .flex-container {
+      display: flex;
+      flex-direction: column; /* Updated */
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .button-container {
+      margin-top: 20px; /* Adjust margin as needed */
+    }
+  </style>
+
+<div class="flex-container">
+  <div class="styled-div">
+      <h1>{{ listing.title }}</h1>
+      <p>{{ listing.description }}</p>
+      <p>Price: ${{ listing.price }}</p>
+      <p>Duration: {{ listing.duration }}</p>
+      <p>Category: {{ listing.category }}</p> 
+  </div>
+
+  <div class="button-container">
+    {% if session.get('user_id') %}
+    <form action="{{ url_for('send_message', listing_id=listing.id) }}" method="POST">
+        <button type="submit">Interested</button>
+    </form>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

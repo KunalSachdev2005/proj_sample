@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<style>
+  /* Add a style block for custom styles */
+  body {
+      margin: 0; /* Remove default body margin */
+      padding: 0; /* Remove default body padding */
+  }
+
+  #background-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/static/background_food.png');
+      background-size: auto;
+      background-repeat: repeat;
+      opacity: 0.2; /* Adjust the opacity value as needed */
+      z-index: -1; /* Send it to the back */
+  }
+
+  .container-fluid {
+      z-index: 1; /* Bring navbar to the front */
+  }
+
+  .styled-div {
+      background-color: #303030;
+      border: 1px solid #ffe81b;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px;
+      color: #fff; /* Changed to white for better contrast */
+      font-size: 18px;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      height: 100%; /* Ensure it takes full height of the card */
+  }
+
+  .styled-div:hover {
+      background-color: #3f3f3f;
+      transform: scale(1.05);
+  }
+
+  a {
+      color: inherit; /* Inherits color from the parent element */
+      text-decoration: none; /* Removes the underline */
+  }
+
+  a:hover {
+      color: inherit; /* Keeps the color the same on hover */
+      text-decoration: none; /* Keeps the underline removed on hover */
+  }
+
+  .card-img-top {
+      height: 120px;
+      width: 150px;
+      margin: auto;
+      margin-top: 10px;
+      object-fit: fill;
+      transition: all 0.3s ease;
+  }
+
+  .card-img-top:hover {
+      height: 130px;
+      width: 160px;
+  }
+
+  .card {
+      background-color: rgba(255, 255, 255, 0.3);
+  }
+
+  .card-body {
+      padding-bottom: -20px;
+  }
+</style>
+
+
+
+<div id="background-container"></div> <!-- Container for background image -->
+
+<h2 style="text-align: center; margin-top: 1em;">
+  <a href="/" style="text-decoration: none; color: #ffe81b;">Items for you:</a>
+</h2>
+
+<div class="container">
+    <div class="row">
+        {% for item in listings %}
+        <div class="col-lg-4 col-md-6 mb-4"> <!-- Adjust column size based on screen size -->
+            <div class="styled-div">
+                <div class="card border-dark">
+                    <a href="{{ url_for('listing_detail', id=item['id']) }}">
+                        <img src="{{ item['image'] }}" class="card-img-top" alt="Item Image">
+                        <div class="card-body">
+                            <h3>{{ item['title'] }}</h3>
+                            <p>{{ item['category'] }} - ${{ item['price'] }}</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
